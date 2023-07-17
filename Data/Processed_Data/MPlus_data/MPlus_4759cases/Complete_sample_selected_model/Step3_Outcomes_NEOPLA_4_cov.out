@@ -1,0 +1,1384 @@
+Mplus VERSION 8.5 (Mac)
+MUTHEN & MUTHEN
+06/15/2023   9:37 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Step3 - 3step LSAY - Lab9
+  DATA:
+  FILE = "./Step1_MPlus_Outcomes.dat";
+
+  VARIABLE:
+  NAMES = W4_SMOKE W5_SMOKE W6_SMOKE W7_SMOKE W8_SMOKE W4_DRINK W5_DRINK W6_DRINK
+       W7_DRINK W8_DRINK W4_PA W5_PA W6_PA W7_PA W8_PA W4_FV W5_FV W6_FV W7_FV W8_FV
+       FEMALE AGE PAT_INT PAT_HIG SELF_INT SELF_HIG EDU_UPP EDU_TER WEALTH_2 WEALTH_3
+       EYE_4 CIRCUL_4 ENDOCR_4 MUSCUL_4 RESPIR_4 NEOPLA_4 NERVOU_4 MENTAL_4 MULTI_4
+       CMULTI_4 LUNCAN_4 EYE CIRCUL ENDOCR MUSCUL RESPIR NEOPLA NERVOU MENTAL MULTI
+       CMULTI LUNCAN CPROB1 CPROB2 CPROB3 CPROB4 CPROB5 CPROB6 N WEIGHTS;
+   MISSING=.;
+   nominal=N;
+    usevar = n;
+    USEOBSERVATIONS = Female NE -99 AND Age NE -99 AND
+    Pat_Int NE -99 AND
+  Pat_Hig NE -99 AND Self_Int NE -99 AND
+  Self_Hig NE -99 AND Edu_Upp NE -99 AND
+  Edu_Ter NE -99 AND
+  Wealth_2 NE -99 AND Wealth_3 NE -99;
+    missing are all (-99);
+    classes = c(6);
+    CATEGORICAL = NEOPLA_4;
+    usevar =  Female Age
+     Pat_Int Pat_Hig Self_Int Self_Hig Edu_Upp
+     Edu_Ter Wealth_2 Wealth_3 NEOPLA_4;
+    WEIGHT  = Weights;
+  ANALYSIS:
+  estimator = mlr;
+    type = mixture;
+    starts = 0;
+    ITERATIONS = 1000;
+  MODEL:
+  %OVERALL%
+  NEOPLA_4 ON Female Age
+     Pat_Int Pat_Hig Self_Int Self_Hig Edu_Upp
+     Edu_Ter Wealth_2 Wealth_3;         ! covariate as predictor of distal
+
+
+      %C#1%
+      [n#1@5.933];
+      [n#2@2.649];
+      [n#3@-0.663];
+      [n#4@2.911];
+      [n#5@2.726];
+
+    [NEOPLA_4$1](m1);
+
+     %C#2%
+    [n#1@-0.217];
+    [n#2@3.291];
+    [n#3@-3.355];
+    [n#4@-1.244];
+    [n#5@0.642];
+
+    [NEOPLA_4$1](m2);
+
+
+    %C#3%
+   [n#1@-3.076];
+    [n#2@-2.195];
+    [n#3@3.177];
+    [n#4@-1.41];
+    [n#5@-1.438];
+
+
+    [NEOPLA_4$1](m3);
+
+
+     %C#4%
+    [n#1@0.91];
+    [n#2@-0.302];
+    [n#3@-1.58];
+    [n#4@3.583];
+    [n#5@0.671];
+
+
+    [NEOPLA_4$1](m4);
+
+
+
+     %C#5%
+    [n#1@-1.643];
+    [n#2@-0.771];
+    [n#3@-3.599];
+    [n#4@-1.41];
+    [n#5@2.36];
+
+
+    [NEOPLA_4$1](m5);
+
+
+      %C#6%
+    [n#1@-5.926];
+    [n#2@-3.66];
+    [n#3@-5.427];
+    [n#4@-4.506];
+    [n#5@-2.354];
+
+      [NEOPLA_4$1](m6);
+  MODEL CONSTRAINT:
+  New (diff12 diff13 diff23 diff14
+    diff24 diff34 diff15 diff16 diff25
+    diff26 diff35 diff36 diff45
+    diff46 diff56);
+    diff12 = m1-m2;  ! test pairwise distal mean differences
+    diff13 = m1-m3;
+    diff23 = m2-m3;
+    diff14 = m1-m4;
+    diff24 = m2-m4;
+    diff34 = m3-m4;
+    diff15 = m1-m5;
+    diff16 = m1-m6;
+    diff25 = m2-m5;
+    diff26 = m2-m6;
+    diff35 = m3-m5;
+    diff36 = m3-m6;
+    diff45 = m4-m5;
+    diff46 = m4-m6;
+    diff56 = m5-m6;
+
+
+  MODEL TEST:
+   0=m1-m2;
+     0=m2-m3;
+     0=m3-m4; ! omnibus test of distal thresholds
+     0=m4-m5;
+     0=m5-m6;
+  OUTPUT:
+  sampstat residual TECH11 TECH14;
+
+
+
+*** WARNING
+  One or more observations has a value of 0 for the WEIGHT variable.
+*** WARNING in OUTPUT command
+  TECH11 option is not available in conjunction with nonlinear constraints
+  through the use of MODEL CONSTRAINT.  Request for TECH11 is ignored.
+*** WARNING in OUTPUT command
+  TECH14 option is not available for TYPE=MIXTURE with weights.
+  Request for TECH14 is ignored.
+   3 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+Step3 - 3step LSAY - Lab9
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        4759
+
+Number of dependent variables                                    2
+Number of independent variables                                 10
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   NEOPLA_4
+
+  Unordered categorical (nominal)
+   N
+
+Observed independent variables
+   FEMALE      AGE         PAT_INT     PAT_HIG     SELF_INT    SELF_HIG
+   EDU_UPP     EDU_TER     WEALTH_2    WEALTH_3
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  Weight variable       WEIGHTS
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                1000
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Link                                                         LOGIT
+
+Input data file(s)
+  ./Step1_MPlus_Outcomes.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             2
+     Number of y missing data patterns           0
+     Number of u missing data patterns           2
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR U
+
+
+           Covariance Coverage
+              NEOPLA_4
+              ________
+ NEOPLA_4       0.999
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    NEOPLA_4
+      Category 1    0.971         4619.917
+      Category 2    0.029          137.076
+    N
+      Category 1    0.147          697.582
+      Category 2    0.174          827.032
+      Category 3    0.106          502.877
+      Category 4    0.117          555.467
+      Category 5    0.229         1088.631
+      Category 6    0.228         1087.412
+
+
+SAMPLE STATISTICS
+
+
+     SAMPLE STATISTICS
+
+
+           Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.535        63.591         0.333         0.376         0.251
+
+
+           Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.346         0.569         0.169         0.340         0.357
+
+
+           Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.249
+ AGE            0.260        65.135
+ PAT_INT       -0.011        -0.029         0.222
+ PAT_HIG        0.009        -0.156        -0.125         0.235
+ SELF_INT       0.023         0.023         0.000         0.006         0.188
+ SELF_HIG      -0.034        -0.445        -0.010         0.046        -0.087
+ EDU_UPP       -0.004        -0.330         0.002         0.010         0.026
+ EDU_TER       -0.023        -0.406        -0.014         0.037        -0.015
+ WEALTH_2       0.001        -0.008         0.010        -0.009         0.005
+ WEALTH_3      -0.011        -0.230        -0.018         0.057         0.013
+
+
+           Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.226
+ EDU_UPP       -0.008         0.245
+ EDU_TER        0.071        -0.096         0.140
+ WEALTH_2      -0.010         0.017        -0.012         0.225
+ WEALTH_3       0.059         0.002         0.045        -0.121         0.229
+
+
+           Correlations
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         1.000
+ AGE            0.065         1.000
+ PAT_INT       -0.045        -0.008         1.000
+ PAT_HIG        0.039        -0.040        -0.549         1.000
+ SELF_INT       0.107         0.007         0.001         0.030         1.000
+ SELF_HIG      -0.144        -0.116        -0.044         0.199        -0.421
+ EDU_UPP       -0.017        -0.082         0.010         0.041         0.120
+ EDU_TER       -0.124        -0.134        -0.080         0.205        -0.094
+ WEALTH_2       0.005        -0.002         0.045        -0.041         0.023
+ WEALTH_3      -0.047        -0.060        -0.078         0.244         0.063
+
+
+           Correlations
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       1.000
+ EDU_UPP       -0.034         1.000
+ EDU_TER        0.398        -0.517         1.000
+ WEALTH_2      -0.045         0.073        -0.069         1.000
+ WEALTH_3       0.257         0.008         0.251        -0.535         1.000
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     FEMALE                0.535      -0.140       0.000   43.73%       0.000      0.000      1.000
+            4759.000       0.249      -1.980       1.000   56.27%       1.000      1.000
+     AGE                  63.591       0.606      33.000    0.02%      56.000     60.000     62.000
+            4759.000      65.135      -0.424      99.000    0.02%      64.000     71.000
+     PAT_INT               0.333       0.709       0.000   67.85%       0.000      0.000      0.000
+            4759.000       0.222      -1.498       1.000   32.15%       0.000      1.000
+     PAT_HIG               0.376       0.512       0.000   59.45%       0.000      0.000      0.000
+            4759.000       0.235      -1.738       1.000   40.55%       1.000      1.000
+     SELF_INT              0.251       1.148       0.000   73.84%       0.000      0.000      0.000
+            4759.000       0.188      -0.683       1.000   26.16%       0.000      1.000
+     SELF_HIG              0.346       0.648       0.000   60.75%       0.000      0.000      0.000
+            4759.000       0.226      -1.580       1.000   39.25%       0.000      1.000
+     EDU_UPP               0.569      -0.277       0.000   41.02%       0.000      0.000      1.000
+            4759.000       0.245      -1.923       1.000   58.98%       1.000      1.000
+     EDU_TER               0.169       1.771       0.000   79.11%       0.000      0.000      0.000
+            4759.000       0.140       1.137       1.000   20.89%       0.000      1.000
+     WEALTH_2              0.340       0.674       0.000   66.06%       0.000      0.000      0.000
+            4759.000       0.225      -1.546       1.000   33.94%       0.000      1.000
+     WEALTH_3              0.357       0.599       0.000   60.41%       0.000      0.000      0.000
+            4759.000       0.229      -1.641       1.000   39.59%       0.000      1.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       21
+
+Loglikelihood
+
+          H0 Value                       -8930.102
+          H0 Scaling Correction Factor      1.2043
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   17902.203
+          Bayesian (BIC)                 18038.027
+          Sample-Size Adjusted BIC       17971.297
+            (n* = (n + 2) / 24)
+
+Wald Test of Parameter Constraints
+
+          Value                              8.335
+          Degrees of Freedom                     5
+          P-Value                           0.1387
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1        704.17164          0.14797
+       2        837.57553          0.17600
+       3        525.51536          0.11043
+       4        566.80705          0.11910
+       5       1053.76945          0.22143
+       6       1071.16097          0.22508
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1        704.17164          0.14797
+       2        837.57553          0.17600
+       3        525.51536          0.11043
+       4        566.80705          0.11910
+       5       1053.76945          0.22143
+       6       1071.16097          0.22508
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1              698          0.14658
+       2              827          0.17378
+       3              503          0.10567
+       4              555          0.11672
+       5             1089          0.22875
+       6             1087          0.22850
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.703
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2        3        4        5        6
+
+    1   0.893    0.031    0.001    0.048    0.023    0.004
+    2   0.028    0.881    0.003    0.012    0.047    0.029
+    3   0.002    0.002    0.978    0.005    0.005    0.008
+    4   0.055    0.014    0.009    0.867    0.037    0.019
+    5   0.023    0.047    0.004    0.024    0.819    0.082
+    6   0.002    0.025    0.019    0.012    0.077    0.865
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2        3        4        5        6
+
+    1   0.884    0.033    0.001    0.043    0.036    0.002
+    2   0.026    0.870    0.001    0.009    0.062    0.032
+    3   0.002    0.004    0.936    0.010    0.009    0.039
+    4   0.059    0.017    0.005    0.849    0.046    0.024
+    5   0.015    0.037    0.002    0.020    0.846    0.080
+    6   0.002    0.023    0.004    0.010    0.083    0.878
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2        3        4        5        6
+
+    1      5.933    2.649   -0.663    2.911    2.726    0.000
+    2     -0.217    3.291   -3.355   -1.244    0.642    0.000
+    3     -3.076   -2.195    3.177   -1.410   -1.438    0.000
+    4      0.910   -0.302   -1.580    3.583    0.671    0.000
+    5     -1.643   -0.771   -3.599   -1.410    2.360    0.000
+    6     -5.926   -3.660   -5.427   -4.506   -2.354    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ NEOPLA_4   ON
+    FEMALE             0.320      0.219      1.460      0.144
+    AGE                0.022      0.013      1.702      0.089
+    PAT_INT           -0.252      0.237     -1.064      0.287
+    PAT_HIG           -0.428      0.233     -1.838      0.066
+    SELF_INT          -0.291      0.255     -1.141      0.254
+    SELF_HIG           0.015      0.243      0.060      0.952
+    EDU_UPP            0.265      0.258      1.028      0.304
+    EDU_TER            0.033      0.346      0.094      0.925
+    WEALTH_2           0.123      0.254      0.487      0.626
+    WEALTH_3           0.123      0.252      0.490      0.624
+
+ Means
+    N#1                5.933      0.000    999.000    999.000
+    N#2                2.649      0.000    999.000    999.000
+    N#3               -0.663      0.000    999.000    999.000
+    N#4                2.911      0.000    999.000    999.000
+    N#5                2.726      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA_4$1         4.624      0.962      4.804      0.000
+
+Latent Class 2
+
+ NEOPLA_4   ON
+    FEMALE             0.320      0.219      1.460      0.144
+    AGE                0.022      0.013      1.702      0.089
+    PAT_INT           -0.252      0.237     -1.064      0.287
+    PAT_HIG           -0.428      0.233     -1.838      0.066
+    SELF_INT          -0.291      0.255     -1.141      0.254
+    SELF_HIG           0.015      0.243      0.060      0.952
+    EDU_UPP            0.265      0.258      1.028      0.304
+    EDU_TER            0.033      0.346      0.094      0.925
+    WEALTH_2           0.123      0.254      0.487      0.626
+    WEALTH_3           0.123      0.252      0.490      0.624
+
+ Means
+    N#1               -0.217      0.000    999.000    999.000
+    N#2                3.291      0.000    999.000    999.000
+    N#3               -3.355      0.000    999.000    999.000
+    N#4               -1.244      0.000    999.000    999.000
+    N#5                0.642      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA_4$1         5.857      0.997      5.876      0.000
+
+Latent Class 3
+
+ NEOPLA_4   ON
+    FEMALE             0.320      0.219      1.460      0.144
+    AGE                0.022      0.013      1.702      0.089
+    PAT_INT           -0.252      0.237     -1.064      0.287
+    PAT_HIG           -0.428      0.233     -1.838      0.066
+    SELF_INT          -0.291      0.255     -1.141      0.254
+    SELF_HIG           0.015      0.243      0.060      0.952
+    EDU_UPP            0.265      0.258      1.028      0.304
+    EDU_TER            0.033      0.346      0.094      0.925
+    WEALTH_2           0.123      0.254      0.487      0.626
+    WEALTH_3           0.123      0.252      0.490      0.624
+
+ Means
+    N#1               -3.076      0.000    999.000    999.000
+    N#2               -2.195      0.000    999.000    999.000
+    N#3                3.177      0.000    999.000    999.000
+    N#4               -1.410      0.000    999.000    999.000
+    N#5               -1.438      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA_4$1         4.844      0.931      5.201      0.000
+
+Latent Class 4
+
+ NEOPLA_4   ON
+    FEMALE             0.320      0.219      1.460      0.144
+    AGE                0.022      0.013      1.702      0.089
+    PAT_INT           -0.252      0.237     -1.064      0.287
+    PAT_HIG           -0.428      0.233     -1.838      0.066
+    SELF_INT          -0.291      0.255     -1.141      0.254
+    SELF_HIG           0.015      0.243      0.060      0.952
+    EDU_UPP            0.265      0.258      1.028      0.304
+    EDU_TER            0.033      0.346      0.094      0.925
+    WEALTH_2           0.123      0.254      0.487      0.626
+    WEALTH_3           0.123      0.252      0.490      0.624
+
+ Means
+    N#1                0.910      0.000    999.000    999.000
+    N#2               -0.302      0.000    999.000    999.000
+    N#3               -1.580      0.000    999.000    999.000
+    N#4                3.583      0.000    999.000    999.000
+    N#5                0.671      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA_4$1         5.114      0.973      5.258      0.000
+
+Latent Class 5
+
+ NEOPLA_4   ON
+    FEMALE             0.320      0.219      1.460      0.144
+    AGE                0.022      0.013      1.702      0.089
+    PAT_INT           -0.252      0.237     -1.064      0.287
+    PAT_HIG           -0.428      0.233     -1.838      0.066
+    SELF_INT          -0.291      0.255     -1.141      0.254
+    SELF_HIG           0.015      0.243      0.060      0.952
+    EDU_UPP            0.265      0.258      1.028      0.304
+    EDU_TER            0.033      0.346      0.094      0.925
+    WEALTH_2           0.123      0.254      0.487      0.626
+    WEALTH_3           0.123      0.252      0.490      0.624
+
+ Means
+    N#1               -1.643      0.000    999.000    999.000
+    N#2               -0.771      0.000    999.000    999.000
+    N#3               -3.599      0.000    999.000    999.000
+    N#4               -1.410      0.000    999.000    999.000
+    N#5                2.360      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA_4$1         5.196      1.063      4.887      0.000
+
+Latent Class 6
+
+ NEOPLA_4   ON
+    FEMALE             0.320      0.219      1.460      0.144
+    AGE                0.022      0.013      1.702      0.089
+    PAT_INT           -0.252      0.237     -1.064      0.287
+    PAT_HIG           -0.428      0.233     -1.838      0.066
+    SELF_INT          -0.291      0.255     -1.141      0.254
+    SELF_HIG           0.015      0.243      0.060      0.952
+    EDU_UPP            0.265      0.258      1.028      0.304
+    EDU_TER            0.033      0.346      0.094      0.925
+    WEALTH_2           0.123      0.254      0.487      0.626
+    WEALTH_3           0.123      0.252      0.490      0.624
+
+ Means
+    N#1               -5.926      0.000    999.000    999.000
+    N#2               -3.660      0.000    999.000    999.000
+    N#3               -5.427      0.000    999.000    999.000
+    N#4               -4.506      0.000    999.000    999.000
+    N#5               -2.354      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA_4$1         4.861      0.966      5.034      0.000
+
+Categorical Latent Variables
+
+ Means
+    C#1               -0.419      0.062     -6.795      0.000
+    C#2               -0.246      0.061     -4.046      0.000
+    C#3               -0.712      0.069    -10.270      0.000
+    C#4               -0.636      0.070     -9.081      0.000
+    C#5               -0.016      0.065     -0.251      0.802
+
+New/Additional Parameters
+    DIFF12            -1.234      0.462     -2.671      0.008
+    DIFF13            -0.221      0.378     -0.584      0.559
+    DIFF23             1.013      0.485      2.089      0.037
+    DIFF14            -0.490      0.423     -1.159      0.246
+    DIFF24             0.744      0.511      1.454      0.146
+    DIFF34            -0.269      0.446     -0.604      0.546
+    DIFF15            -0.572      0.389     -1.471      0.141
+    DIFF16            -0.238      0.335     -0.709      0.478
+    DIFF25             0.661      0.504      1.312      0.190
+    DIFF26             0.996      0.453      2.198      0.028
+    DIFF35            -0.352      0.430     -0.817      0.414
+    DIFF36            -0.017      0.384     -0.043      0.966
+    DIFF45            -0.082      0.463     -0.178      0.859
+    DIFF46             0.253      0.420      0.601      0.548
+    DIFF56             0.335      0.388      0.864      0.388
+
+
+RESULTS IN PROBABILITY SCALE
+
+                    Estimate
+
+Latent Class 1
+
+ NEOPLA_4
+    Category 1         0.961
+    Category 2         0.039
+
+Latent Class 2
+
+ NEOPLA_4
+    Category 1         0.987
+    Category 2         0.013
+
+Latent Class 3
+
+ NEOPLA_4
+    Category 1         0.967
+    Category 2         0.033
+
+Latent Class 4
+
+ NEOPLA_4
+    Category 1         0.976
+    Category 2         0.024
+
+Latent Class 5
+
+ NEOPLA_4
+    Category 1         0.974
+    Category 2         0.026
+
+Latent Class 6
+
+ NEOPLA_4
+    Category 1         0.962
+    Category 2         0.038
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+Latent Class 1
+
+ NEOPLA_4   ON
+    FEMALE             1.378      0.302      0.896      2.118
+    AGE                1.022      0.013      0.997      1.047
+    PAT_INT            0.777      0.184      0.489      1.236
+    PAT_HIG            0.652      0.152      0.413      1.029
+    SELF_INT           0.747      0.191      0.453      1.232
+    SELF_HIG           1.015      0.246      0.630      1.633
+    EDU_UPP            1.303      0.336      0.786      2.161
+    EDU_TER            1.033      0.357      0.524      2.036
+    WEALTH_2           1.131      0.287      0.688      1.860
+    WEALTH_3           1.131      0.285      0.690      1.854
+
+Latent Class 2
+
+ NEOPLA_4   ON
+    FEMALE             1.378      0.302      0.896      2.118
+    AGE                1.022      0.013      0.997      1.047
+    PAT_INT            0.777      0.184      0.489      1.236
+    PAT_HIG            0.652      0.152      0.413      1.029
+    SELF_INT           0.747      0.191      0.453      1.232
+    SELF_HIG           1.015      0.246      0.630      1.633
+    EDU_UPP            1.303      0.336      0.786      2.161
+    EDU_TER            1.033      0.357      0.524      2.036
+    WEALTH_2           1.131      0.287      0.688      1.860
+    WEALTH_3           1.131      0.285      0.690      1.854
+
+Latent Class 3
+
+ NEOPLA_4   ON
+    FEMALE             1.378      0.302      0.896      2.118
+    AGE                1.022      0.013      0.997      1.047
+    PAT_INT            0.777      0.184      0.489      1.236
+    PAT_HIG            0.652      0.152      0.413      1.029
+    SELF_INT           0.747      0.191      0.453      1.232
+    SELF_HIG           1.015      0.246      0.630      1.633
+    EDU_UPP            1.303      0.336      0.786      2.161
+    EDU_TER            1.033      0.357      0.524      2.036
+    WEALTH_2           1.131      0.287      0.688      1.860
+    WEALTH_3           1.131      0.285      0.690      1.854
+
+Latent Class 4
+
+ NEOPLA_4   ON
+    FEMALE             1.378      0.302      0.896      2.118
+    AGE                1.022      0.013      0.997      1.047
+    PAT_INT            0.777      0.184      0.489      1.236
+    PAT_HIG            0.652      0.152      0.413      1.029
+    SELF_INT           0.747      0.191      0.453      1.232
+    SELF_HIG           1.015      0.246      0.630      1.633
+    EDU_UPP            1.303      0.336      0.786      2.161
+    EDU_TER            1.033      0.357      0.524      2.036
+    WEALTH_2           1.131      0.287      0.688      1.860
+    WEALTH_3           1.131      0.285      0.690      1.854
+
+Latent Class 5
+
+ NEOPLA_4   ON
+    FEMALE             1.378      0.302      0.896      2.118
+    AGE                1.022      0.013      0.997      1.047
+    PAT_INT            0.777      0.184      0.489      1.236
+    PAT_HIG            0.652      0.152      0.413      1.029
+    SELF_INT           0.747      0.191      0.453      1.232
+    SELF_HIG           1.015      0.246      0.630      1.633
+    EDU_UPP            1.303      0.336      0.786      2.161
+    EDU_TER            1.033      0.357      0.524      2.036
+    WEALTH_2           1.131      0.287      0.688      1.860
+    WEALTH_3           1.131      0.285      0.690      1.854
+
+Latent Class 6
+
+ NEOPLA_4   ON
+    FEMALE             1.378      0.302      0.896      2.118
+    AGE                1.022      0.013      0.997      1.047
+    PAT_INT            0.777      0.184      0.489      1.236
+    PAT_HIG            0.652      0.152      0.413      1.029
+    SELF_INT           0.747      0.191      0.453      1.232
+    SELF_HIG           1.015      0.246      0.630      1.633
+    EDU_UPP            1.303      0.336      0.786      2.161
+    EDU_TER            1.033      0.357      0.524      2.036
+    WEALTH_2           1.131      0.287      0.688      1.860
+    WEALTH_3           1.131      0.285      0.690      1.854
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.142E-05
+       (ratio of smallest to largest eigenvalue)
+
+
+RESIDUAL OUTPUT
+
+
+     ESTIMATED MODEL AND RESIDUALS (OBSERVED - ESTIMATED) FOR CLASS 1
+
+
+           Model Estimated Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.382        62.162         0.303         0.470         0.246
+
+
+           Model Estimated Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.490         0.566         0.286         0.300         0.552
+
+
+           Residuals for Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Model Estimated Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.236
+ AGE            0.020        51.349
+ PAT_INT        0.000         0.000         0.211
+ PAT_HIG        0.029         0.063         0.000         0.249
+ SELF_INT       0.022         0.060         0.000         0.000         0.186
+ SELF_HIG       0.000         0.000         0.000         0.041         0.000
+ EDU_UPP        0.008         0.000         0.017         0.000         0.028
+ EDU_TER        0.000         0.000         0.000         0.043         0.000
+ WEALTH_2       0.000         0.000         0.009         0.000         0.006
+ WEALTH_3       0.013         0.100         0.000         0.060         0.000
+
+
+           Model Estimated Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.250
+ EDU_UPP        0.000         0.246
+ EDU_TER        0.091         0.000         0.204
+ WEALTH_2       0.000         0.023         0.000         0.210
+ WEALTH_3       0.071         0.000         0.067         0.000         0.247
+
+
+           Residuals for Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.000
+ AGE            0.000         0.000
+ PAT_INT        0.000         0.000         0.000
+ PAT_HIG        0.000         0.000         0.000         0.000
+ SELF_INT       0.000         0.000         0.000         0.000         0.000
+ SELF_HIG       0.000         0.000         0.000         0.000         0.000
+ EDU_UPP        0.000         0.000         0.000         0.000         0.000
+ EDU_TER        0.000         0.000         0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.000
+ EDU_UPP        0.000         0.000
+ EDU_TER        0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+     ESTIMATED MODEL AND RESIDUALS (OBSERVED - ESTIMATED) FOR CLASS 2
+
+
+           Model Estimated Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.539        62.219         0.342         0.405         0.284
+
+
+           Model Estimated Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.382         0.587         0.224         0.361         0.456
+
+
+           Residuals for Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Model Estimated Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.248
+ AGE            0.000        49.077
+ PAT_INT        0.000         0.059         0.225
+ PAT_HIG        0.021         0.000         0.000         0.241
+ SELF_INT       0.018         0.023         0.006         0.000         0.203
+ SELF_HIG       0.000         0.000         0.000         0.039         0.000
+ EDU_UPP        0.002         0.000         0.000         0.004         0.031
+ EDU_TER        0.000         0.000         0.000         0.036         0.000
+ WEALTH_2       0.000         0.219         0.014         0.000         0.004
+ WEALTH_3       0.009         0.000         0.000         0.043         0.005
+
+
+           Model Estimated Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.236
+ EDU_UPP        0.000         0.242
+ EDU_TER        0.089         0.000         0.174
+ WEALTH_2       0.000         0.006         0.000         0.231
+ WEALTH_3       0.052         0.000         0.036         0.000         0.248
+
+
+           Residuals for Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.000
+ AGE            0.000         0.000
+ PAT_INT        0.000         0.000         0.000
+ PAT_HIG        0.000         0.000         0.000         0.000
+ SELF_INT       0.000         0.000         0.000         0.000         0.000
+ SELF_HIG       0.000         0.000         0.000         0.000         0.000
+ EDU_UPP        0.000         0.000         0.000         0.000         0.000
+ EDU_TER        0.000         0.000         0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.000
+ EDU_UPP        0.000         0.000
+ EDU_TER        0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+     ESTIMATED MODEL AND RESIDUALS (OBSERVED - ESTIMATED) FOR CLASS 3
+
+
+           Model Estimated Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.553        60.917         0.402         0.244         0.220
+
+
+           Model Estimated Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.254         0.517         0.092         0.300         0.207
+
+
+           Residuals for Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Model Estimated Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.247
+ AGE            0.223        49.699
+ PAT_INT        0.010         0.023         0.240
+ PAT_HIG        0.000         0.004         0.000         0.184
+ SELF_INT       0.017         0.036         0.007         0.004         0.171
+ SELF_HIG       0.000         0.000         0.002         0.029         0.000
+ EDU_UPP        0.000         0.000         0.010         0.017         0.012
+ EDU_TER        0.000         0.000         0.000         0.022         0.000
+ WEALTH_2       0.014         0.000         0.014         0.000         0.012
+ WEALTH_3       0.000         0.000         0.000         0.044         0.007
+
+
+           Model Estimated Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.189
+ EDU_UPP        0.033         0.250
+ EDU_TER        0.037         0.000         0.084
+ WEALTH_2       0.000         0.009         0.000         0.210
+ WEALTH_3       0.048         0.007         0.032         0.000         0.164
+
+
+           Residuals for Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.000
+ AGE            0.000         0.000
+ PAT_INT        0.000         0.000         0.000
+ PAT_HIG        0.000         0.000         0.000         0.000
+ SELF_INT       0.000         0.000         0.000         0.000         0.000
+ SELF_HIG       0.000         0.000         0.000         0.000         0.000
+ EDU_UPP        0.000         0.000         0.000         0.000         0.000
+ EDU_TER        0.000         0.000         0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.000
+ EDU_UPP        0.000         0.000
+ EDU_TER        0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+     ESTIMATED MODEL AND RESIDUALS (OBSERVED - ESTIMATED) FOR CLASS 4
+
+
+           Model Estimated Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.323        62.477         0.298         0.444         0.235
+
+
+           Model Estimated Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.450         0.587         0.243         0.330         0.425
+
+
+           Residuals for Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Model Estimated Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.219
+ AGE            0.176        56.297
+ PAT_INT        0.000         0.067         0.209
+ PAT_HIG        0.007         0.000         0.000         0.247
+ SELF_INT       0.039         0.000         0.005         0.003         0.180
+ SELF_HIG       0.000         0.000         0.000         0.065         0.000
+ EDU_UPP        0.006         0.000         0.010         0.000         0.017
+ EDU_TER        0.000         0.000         0.000         0.048         0.000
+ WEALTH_2       0.001         0.000         0.002         0.000         0.001
+ WEALTH_3       0.000         0.000         0.000         0.067         0.000
+
+
+           Model Estimated Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.247
+ EDU_UPP        0.000         0.242
+ EDU_TER        0.084         0.000         0.184
+ WEALTH_2       0.000         0.022         0.000         0.221
+ WEALTH_3       0.061         0.000         0.051         0.000         0.244
+
+
+           Residuals for Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.000
+ AGE            0.000         0.000
+ PAT_INT        0.000         0.000         0.000
+ PAT_HIG        0.000         0.000         0.000         0.000
+ SELF_INT       0.000         0.000         0.000         0.000         0.000
+ SELF_HIG       0.000         0.000         0.000         0.000         0.000
+ EDU_UPP        0.000         0.000         0.000         0.000         0.000
+ EDU_TER        0.000         0.000         0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.000
+ EDU_UPP        0.000         0.000
+ EDU_TER        0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+     ESTIMATED MODEL AND RESIDUALS (OBSERVED - ESTIMATED) FOR CLASS 5
+
+
+           Model Estimated Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.585        65.214         0.317         0.386         0.265
+
+
+           Model Estimated Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.311         0.600         0.128         0.358         0.312
+
+
+           Residuals for Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Model Estimated Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.243
+ AGE            0.093        72.431
+ PAT_INT        0.000         0.000         0.216
+ PAT_HIG        0.018         0.000         0.000         0.237
+ SELF_INT       0.027         0.010         0.000         0.012         0.195
+ SELF_HIG       0.000         0.000         0.000         0.036         0.000
+ EDU_UPP        0.000         0.000         0.001         0.018         0.028
+ EDU_TER        0.000         0.000         0.000         0.029         0.000
+ WEALTH_2       0.000         0.000         0.008         0.000         0.000
+ WEALTH_3       0.001         0.000         0.000         0.052         0.028
+
+
+           Model Estimated Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.214
+ EDU_UPP        0.000         0.240
+ EDU_TER        0.055         0.000         0.112
+ WEALTH_2       0.003         0.021         0.000         0.230
+ WEALTH_3       0.044         0.010         0.030         0.000         0.215
+
+
+           Residuals for Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.000
+ AGE            0.000         0.000
+ PAT_INT        0.000         0.000         0.000
+ PAT_HIG        0.000         0.000         0.000         0.000
+ SELF_INT       0.000         0.000         0.000         0.000         0.000
+ SELF_HIG       0.000         0.000         0.000         0.000         0.000
+ EDU_UPP        0.000         0.000         0.000         0.000         0.000
+ EDU_TER        0.000         0.000         0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.000
+ EDU_UPP        0.000         0.000
+ EDU_TER        0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+     ESTIMATED MODEL AND RESIDUALS (OBSERVED - ESTIMATED) FOR CLASS 6
+
+
+           Model Estimated Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.686        65.907         0.347         0.310         0.239
+
+
+           Model Estimated Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.247         0.540         0.086         0.359         0.232
+
+
+           Residuals for Means
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Means
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         0.000
+
+
+           Model Estimated Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.215
+ AGE            0.199        76.893
+ PAT_INT        0.000         0.105         0.226
+ PAT_HIG        0.023         0.000         0.000         0.214
+ SELF_INT       0.018         0.026         0.000         0.014         0.182
+ SELF_HIG       0.000         0.000         0.000         0.037         0.000
+ EDU_UPP        0.000         0.000         0.000         0.027         0.027
+ EDU_TER        0.000         0.000         0.000         0.023         0.000
+ WEALTH_2       0.005         0.000         0.013         0.003         0.007
+ WEALTH_3       0.000         0.000         0.000         0.036         0.023
+
+
+           Model Estimated Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.186
+ EDU_UPP        0.024         0.248
+ EDU_TER        0.039         0.000         0.079
+ WEALTH_2       0.002         0.018         0.000         0.230
+ WEALTH_3       0.029         0.015         0.016         0.000         0.178
+
+
+           Residuals for Covariances
+              FEMALE        AGE           PAT_INT       PAT_HIG       SELF_INT
+              ________      ________      ________      ________      ________
+ FEMALE         0.000
+ AGE            0.000         0.000
+ PAT_INT        0.000         0.000         0.000
+ PAT_HIG        0.000         0.000         0.000         0.000
+ SELF_INT       0.000         0.000         0.000         0.000         0.000
+ SELF_HIG       0.000         0.000         0.000         0.000         0.000
+ EDU_UPP        0.000         0.000         0.000         0.000         0.000
+ EDU_TER        0.000         0.000         0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+           Residuals for Covariances
+              SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2      WEALTH_3
+              ________      ________      ________      ________      ________
+ SELF_HIG       0.000
+ EDU_UPP        0.000         0.000
+ EDU_TER        0.000         0.000         0.000
+ WEALTH_2       0.000         0.000         0.000         0.000
+ WEALTH_3       0.000         0.000         0.000         0.000         0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 1
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.884          0.884                  0.000                0.000
+       Category 1        0.033          0.033                  0.000                0.000
+       Category 2        0.001          0.001                  0.000                0.000
+       Category 3        0.043          0.043                  0.000                0.000
+       Category 4        0.036          0.036                  0.000                0.000
+       Category 5        0.002          0.002                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 2
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.026          0.026                  0.000                0.000
+       Category 1        0.870          0.870                  0.000                0.000
+       Category 2        0.001          0.001                  0.000                0.000
+       Category 3        0.009          0.009                  0.000                0.000
+       Category 4        0.062          0.062                  0.000                0.000
+       Category 5        0.032          0.032                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 3
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.002          0.002                  0.000                0.000
+       Category 1        0.004          0.004                  0.000                0.000
+       Category 2        0.936          0.936                  0.000                0.000
+       Category 3        0.010          0.010                  0.000                0.000
+       Category 4        0.009          0.009                  0.000                0.000
+       Category 5        0.039          0.039                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 4
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.059          0.059                  0.000                0.000
+       Category 1        0.017          0.017                  0.000                0.000
+       Category 2        0.005          0.005                  0.000                0.000
+       Category 3        0.849          0.849                  0.000                0.000
+       Category 4        0.046          0.046                  0.000                0.000
+       Category 5        0.024          0.024                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 5
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.015          0.015                  0.000                0.000
+       Category 1        0.037          0.037                  0.000                0.000
+       Category 2        0.002          0.002                  0.000                0.000
+       Category 3        0.020          0.020                  0.000                0.000
+       Category 4        0.846          0.846                  0.000                0.000
+       Category 5        0.080          0.080                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 6
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.002          0.002                  0.000                0.000
+       Category 1        0.023          0.023                  0.000                0.000
+       Category 2        0.004          0.004                  0.000                0.000
+       Category 3        0.010          0.010                  0.000                0.000
+       Category 4        0.083          0.083                  0.000                0.000
+       Category 5        0.878          0.878                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 1
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA_4
+       Category 1        0.961          0.961                  0.000                0.000
+       Category 2        0.039          0.039                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 2
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA_4
+       Category 1        0.987          0.987                  0.000                0.000
+       Category 2        0.013          0.013                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 3
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA_4
+       Category 1        0.967          0.967                  0.000                0.000
+       Category 2        0.033          0.033                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 4
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA_4
+       Category 1        0.976          0.976                  0.000                0.002
+       Category 2        0.024          0.024                  0.000               -0.002
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 5
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA_4
+       Category 1        0.974          0.974                  0.000                0.000
+       Category 2        0.026          0.026                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 6
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA_4
+       Category 1        0.962          0.962                  0.000                0.000
+       Category 2        0.038          0.038                  0.000                0.000
+
+
+     Beginning Time:  21:37:50
+        Ending Time:  21:37:51
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2020 Muthen & Muthen

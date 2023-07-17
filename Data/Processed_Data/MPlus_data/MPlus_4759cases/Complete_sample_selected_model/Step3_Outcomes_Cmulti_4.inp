@@ -1,0 +1,125 @@
+TITLE:
+Step3 - 3step LSAY - Lab9
+DATA:
+FILE = "./Step1_MPlus_Outcomes.dat";
+ 
+VARIABLE:
+NAMES = W4_SMOKE W5_SMOKE W6_SMOKE W7_SMOKE W8_SMOKE W4_DRINK W5_DRINK W6_DRINK
+     W7_DRINK W8_DRINK W4_PA W5_PA W6_PA W7_PA W8_PA W4_FV W5_FV W6_FV W7_FV W8_FV
+     FEMALE AGE PAT_INT PAT_HIG SELF_INT SELF_HIG EDU_UPP EDU_TER WEALTH_2 WEALTH_3
+     EYE_4 CIRCUL_4 ENDOCR_4 MUSCUL_4 RESPIR_4 NEOPLA_4 NERVOU_4 MENTAL_4 MULTI_4
+     CMULTI_4 LUNCAN_4 EYE CIRCUL ENDOCR MUSCUL RESPIR NEOPLA NERVOU MENTAL MULTI
+     CMULTI LUNCAN CPROB1 CPROB2 CPROB3 CPROB4 CPROB5 CPROB6 N WEIGHTS; 
+ MISSING=.;
+ nominal=N;
+  usevar = n;
+  USEOBSERVATIONS = Female NE -99 AND Age NE -99 AND
+  Pat_Int NE -99 AND
+Pat_Hig NE -99 AND Self_Int NE -99 AND
+Self_Hig NE -99 AND Edu_Upp NE -99 AND
+Edu_Ter NE -99 AND
+Wealth_2 NE -99 AND Wealth_3 NE -99;
+  missing are all (-99);
+  classes = c(6);
+  CATEGORICAL = Cmulti_4;
+  usevar =  Cmulti_4;
+  WEIGHT  = Weights;
+ANALYSIS:
+estimator = mlr;
+  type = mixture;
+  starts = 0;
+  ITERATIONS = 1000;
+MODEL:
+%OVERALL%
+
+   %C#1%
+   [n#1@5.933];
+   [n#2@2.649];
+   [n#3@-0.663];
+   [n#4@2.911];
+   [n#5@2.726];
+
+ [Cmulti_4$1](m1);
+
+  %C#2%
+ [n#1@-0.217];
+ [n#2@3.291];
+ [n#3@-3.355];
+ [n#4@-1.244];
+ [n#5@0.642];
+
+ [Cmulti_4$1](m2);
+
+
+ %C#3%
+[n#1@-3.076];
+ [n#2@-2.195];
+ [n#3@3.177];
+ [n#4@-1.41];
+ [n#5@-1.438];
+
+
+ [Cmulti_4$1](m3);
+
+
+  %C#4%
+ [n#1@0.91];
+ [n#2@-0.302];
+ [n#3@-1.58];
+ [n#4@3.583];
+ [n#5@0.671];
+
+
+ [Cmulti_4$1](m4);
+
+
+
+  %C#5%
+ [n#1@-1.643];
+ [n#2@-0.771];
+ [n#3@-3.599];
+ [n#4@-1.41];
+ [n#5@2.36];
+
+
+ [Cmulti_4$1](m5);
+
+
+   %C#6%
+ [n#1@-5.926];
+ [n#2@-3.66];
+ [n#3@-5.427];
+ [n#4@-4.506];
+ [n#5@-2.354];
+
+   [Cmulti_4$1](m6);
+MODEL CONSTRAINT:
+New (diff12 diff13 diff23 diff14
+  diff24 diff34 diff15 diff16 diff25
+  diff26 diff35 diff36 diff45
+  diff46 diff56);
+  diff12 = m1-m2;  ! test pairwise distal mean differences
+  diff13 = m1-m3;
+  diff23 = m2-m3;
+  diff14 = m1-m4;
+  diff24 = m2-m4;
+  diff34 = m3-m4;
+  diff15 = m1-m5;
+  diff16 = m1-m6;
+  diff25 = m2-m5;
+  diff26 = m2-m6;
+  diff35 = m3-m5;
+  diff36 = m3-m6;
+  diff45 = m4-m5;
+  diff46 = m4-m6;
+  diff56 = m5-m6;
+
+  
+MODEL TEST:
+ 0=m1-m2;
+   0=m2-m3;
+   0=m3-m4; ! omnibus test of distal thresholds
+   0=m4-m5;
+   0=m5-m6;
+OUTPUT:
+sampstat residual TECH11 TECH14;

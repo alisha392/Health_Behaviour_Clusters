@@ -1,0 +1,39 @@
+TITLE:
+R3STEP LCA with covariates;
+DATA:
+FILE = "./Step1_Outcomes_049b9538008a831ad034ef2ef4d075bc.dat";
+ 
+VARIABLE:
+NAMES = idauniq W4_Smoke W5_Smoke W6_Smoke W7_Smoke W8_Smoke W4_Drink W5_Drink
+     W6_Drink W7_Drink W8_Drink W4_PA W5_PA W6_PA W7_PA W8_PA W4_FV W5_FV W6_FV
+     W7_FV W8_FV Weights Female Age Pat_Int Pat_Hig Self_Int Self_Hig Edu_Upp
+     Edu_Ter Wealth_2 Wealth_3 Eye_4 Circul_4 Endocr_4 Muscul_4 Respir_4 Neopla_4
+     Nervou_4 Mental_4 Multi_4 CMulti_4 Luncan_4 Eye Circul Endocr Muscul Respir
+     Neopla Nervou Mental Multi CMulti Luncan; 
+ MISSING=.;
+ CATEGORICAL = W4_Smoke-W8_FV;
+  USEVARIABLES = W4_Smoke-W8_FV,Weights;
+  CLASSES = c (7);
+  USEOBSERVATIONS = Female NE -99 AND AGE NE -99 AND
+  Pat_Int NE -99 AND
+Pat_Hig NE -99 AND Self_Int NE -99 AND
+Self_Hig NE -99 AND Edu_Upp NE -99 AND
+Edu_Ter NE -99 AND
+Wealth_2 NE -99 AND Wealth_3 NE -99;
+  MISSING ARE ALL (-99);
+  AUXILIARY = (R3STEP) Female-Wealth_3;
+  WEIGHT  = Weights;
+ANALYSIS:
+TYPE = MIXTURE;
+  STARTS = 500 100;
+  STITERATIONS=20;
+  LRTSTARTS = 50 10 400 20;
+OUTPUT:
+sampstat TECH11 TECH14;
+SAVEDATA:
+FILE = mplus_covariates_LCA.cprob;
+  SAVE = CPROB;
+  Missflag= -99;
+PLOT:
+TYPE=PLOT3;
+  series = W4_Smoke-W8_FV(*);

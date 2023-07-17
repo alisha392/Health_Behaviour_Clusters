@@ -1,0 +1,41 @@
+TITLE:
+C6_LCA_enumerate
+DATA:
+FILE = "./c_lca_enumerate.dat";
+ 
+VARIABLE:
+NAMES = idauniq W4_Smoke W5_Smoke W6_Smoke W7_Smoke W8_Smoke W4_Drink W5_Drink
+     W6_Drink W7_Drink W8_Drink W4_PA W5_PA W6_PA W7_PA W8_PA W4_FV W5_FV W6_FV
+     W7_FV W8_FV Weights Female Age Pat_Int Pat_Hig Self_Int Self_Hig Edu_Upp
+     Edu_Ter Wealth_2 Wealth_3 Eye_4 Circul_4 Endocr_4 Muscul_4 Respir_4 Neopla_4
+     Nervou_4 Mental_4 Multi_4 CMulti_4 Luncan_4 Eye Circul Endocr Muscul Respir
+     Neopla Nervou Mental Multi CMulti Luncan; 
+ MISSING=.;
+ CATEGORICAL = W4_Smoke,W5_Smoke,W6_Smoke,W7_Smoke,W8_Smoke,
+W4_Drink,W5_Drink,W6_Drink,W7_Drink,W8_Drink,
+W4_PA,W5_PA,W6_PA,W7_PA,W8_PA,W4_FV,W5_FV,W6_FV,
+W7_FV,W8_FV;
+USEVARIABLES = W4_Smoke,W5_Smoke,W6_Smoke,W7_Smoke,W8_Smoke,
+W4_Drink,W5_Drink,W6_Drink,W7_Drink,W8_Drink,
+W4_PA,W5_PA,W6_PA,W7_PA,W8_PA,W4_FV,W5_FV,W6_FV,
+W7_FV,W8_FV,Weights;
+        WEIGHT        = Weights;
+MISSING ARE ALL (-99);
+        classes = c(6);
+ANALYSIS:
+estimator = mlr;
+    type = mixture;
+    starts = 500 100;
+    STITERATIONS=20;
+LRTSTARTS = 50 10 400 20;
+OUTPUT:
+TECH10 TECH11 TECH14
+PLOT:
+type = plot3;
+    series is W4_Smoke(2) W5_Smoke(3) W6_Smoke(4) W7_Smoke(5)
+    W8_Smoke(6) W4_Drink(7) W5_Drink(8)
+    W6_Drink(9) W7_Drink(10)
+    W8_Drink(11) W4_PA(12) W5_PA(13)
+    W6_PA(14) W7_PA(15) W8_PA(16)
+    W4_FV(17) W5_FV(18) W6_FV(19)
+    W7_FV(20) W8_FV(21);

@@ -1,0 +1,807 @@
+Mplus VERSION 8.5 (Mac)
+MUTHEN & MUTHEN
+06/18/2023  10:20 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Step3 - 3step LSAY - Lab9
+  DATA:
+  FILE = "./Step1_MPlus_Outcomes.dat";
+
+  VARIABLE:
+  NAMES = W4_SMOKE W5_SMOKE W6_SMOKE W7_SMOKE W8_SMOKE W4_DRINK W5_DRINK W6_DRINK
+       W7_DRINK W8_DRINK W4_PA W5_PA W6_PA W7_PA W8_PA W4_FV W5_FV W6_FV W7_FV W8_FV
+       FEMALE AGE PAT_INT PAT_HIG SELF_INT SELF_HIG EDU_UPP EDU_TER WEALTH_2 WEALTH_3
+       EYE_4 CIRCUL_4 ENDOCR_4 MUSCUL_4 RESPIR_4 NEOPLA_4 NERVOU_4 MENTAL_4 MULTI_4
+       CMULTI_4 LUNCAN_4 EYE CIRCUL ENDOCR MUSCUL RESPIR NEOPLA NERVOU MENTAL MULTI
+       CMULTI LUNCAN CPROB1 CPROB2 CPROB3 CPROB4 CPROB5 CPROB6 N WEIGHTS;
+   MISSING=.;
+   nominal=N;
+    usevar = n;
+    USEOBSERVATIONS = Female NE -99 AND Age NE -99 AND
+    Pat_Int NE -99 AND
+  Pat_Hig NE -99 AND Self_Int NE -99 AND
+  Self_Hig NE -99 AND Edu_Upp NE -99 AND
+  Edu_Ter NE -99 AND
+  Wealth_2 NE -99 AND Wealth_3 NE -99;
+    missing are all (-99);
+    classes = c(6);
+    CATEGORICAL = MENTAL;
+    usevar =  Female Age
+     Pat_Int Pat_Hig Self_Int Self_Hig Edu_Upp
+     Edu_Ter Wealth_2 Wealth_3 MENTAL MENTAL_4;
+    WEIGHT  = Weights;
+  ANALYSIS:
+  estimator = mlr;
+    type = mixture;
+    starts = 0;
+    ITERATIONS = 1000;
+  MODEL:
+  %OVERALL%
+  MENTAL ON Female Age
+     Pat_Int Pat_Hig Self_Int Self_Hig Edu_Upp
+     Edu_Ter Wealth_2 Wealth_3;         ! covariate as predictor of distal
+
+
+      %C#1%
+      [n#1@5.933];
+      [n#2@2.649];
+      [n#3@-0.663];
+      [n#4@2.911];
+      [n#5@2.726];
+
+    [MENTAL$1](m1);
+
+     %C#2%
+    [n#1@-0.217];
+    [n#2@3.291];
+    [n#3@-3.355];
+    [n#4@-1.244];
+    [n#5@0.642];
+
+    [MENTAL$1](m2);
+
+
+    %C#3%
+   [n#1@-3.076];
+    [n#2@-2.195];
+    [n#3@3.177];
+    [n#4@-1.41];
+    [n#5@-1.438];
+
+
+    [MENTAL$1](m3);
+
+
+     %C#4%
+    [n#1@0.91];
+    [n#2@-0.302];
+    [n#3@-1.58];
+    [n#4@3.583];
+    [n#5@0.671];
+
+
+    [MENTAL$1](m4);
+
+
+
+     %C#5%
+    [n#1@-1.643];
+    [n#2@-0.771];
+    [n#3@-3.599];
+    [n#4@-1.41];
+    [n#5@2.36];
+
+
+    [MENTAL$1](m5);
+
+
+      %C#6%
+    [n#1@-5.926];
+    [n#2@-3.66];
+    [n#3@-5.427];
+    [n#4@-4.506];
+    [n#5@-2.354];
+
+      [MENTAL$1](m6);
+  MODEL CONSTRAINT:
+  New (diff12 diff13 diff23 diff14
+    diff24 diff34 diff15 diff16 diff25
+    diff26 diff35 diff36 diff45
+    diff46 diff56);
+    diff12 = m1-m2;  ! test pairwise distal mean differences
+    diff13 = m1-m3;
+    diff23 = m2-m3;
+    diff14 = m1-m4;
+    diff24 = m2-m4;
+    diff34 = m3-m4;
+    diff15 = m1-m5;
+    diff16 = m1-m6;
+    diff25 = m2-m5;
+    diff26 = m2-m6;
+    diff35 = m3-m5;
+    diff36 = m3-m6;
+    diff45 = m4-m5;
+    diff46 = m4-m6;
+    diff56 = m5-m6;
+
+
+  MODEL TEST:
+   0=m1-m2;
+     0=m2-m3;
+     0=m3-m4; ! omnibus test of distal thresholds
+     0=m4-m5;
+     0=m5-m6;
+  OUTPUT:
+  sampstat residual TECH11 TECH14;
+
+
+
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  MENTAL_4
+*** WARNING in MODEL command
+  At least one variable is uncorrelated with all other variables within class.
+  Check that this is what is intended.
+*** WARNING
+  One or more observations has a value of 0 for the WEIGHT variable.
+*** WARNING in OUTPUT command
+  TECH11 option is not available in conjunction with nonlinear constraints
+  through the use of MODEL CONSTRAINT.  Request for TECH11 is ignored.
+*** WARNING in OUTPUT command
+  TECH14 option is not available for TYPE=MIXTURE with weights.
+  Request for TECH14 is ignored.
+   5 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+Step3 - 3step LSAY - Lab9
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        4759
+
+Number of dependent variables                                    3
+Number of independent variables                                 10
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Continuous
+   MENTAL_4
+
+  Binary and ordered categorical (ordinal)
+   MENTAL
+
+  Unordered categorical (nominal)
+   N
+
+Observed independent variables
+   FEMALE      AGE         PAT_INT     PAT_HIG     SELF_INT    SELF_HIG
+   EDU_UPP     EDU_TER     WEALTH_2    WEALTH_3
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  Weight variable       WEIGHTS
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                1000
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Link                                                         LOGIT
+
+Input data file(s)
+  ./Step1_MPlus_Outcomes.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             4
+     Number of y missing data patterns           2
+     Number of u missing data patterns           2
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              MENTAL        MENTAL_4      FEMALE        AGE           PAT_INT
+              ________      ________      ________      ________      ________
+ MENTAL         0.015
+ MENTAL_4       0.005         0.086
+ FEMALE         0.015         0.086         1.000
+ AGE            0.015         0.086         1.000         1.000
+ PAT_INT        0.015         0.086         1.000         1.000         1.000
+ PAT_HIG        0.015         0.086         1.000         1.000         1.000
+ SELF_INT       0.015         0.086         1.000         1.000         1.000
+ SELF_HIG       0.015         0.086         1.000         1.000         1.000
+ EDU_UPP        0.015         0.086         1.000         1.000         1.000
+ EDU_TER        0.015         0.086         1.000         1.000         1.000
+ WEALTH_2       0.015         0.086         1.000         1.000         1.000
+ WEALTH_3       0.015         0.086         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PAT_HIG       SELF_INT      SELF_HIG      EDU_UPP       EDU_TER
+              ________      ________      ________      ________      ________
+ PAT_HIG        1.000
+ SELF_INT       1.000         1.000
+ SELF_HIG       1.000         1.000         1.000
+ EDU_UPP        1.000         1.000         1.000         1.000
+ EDU_TER        1.000         1.000         1.000         1.000         1.000
+ WEALTH_2       1.000         1.000         1.000         1.000         1.000
+ WEALTH_3       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              WEALTH_2      WEALTH_3
+              ________      ________
+ WEALTH_2       1.000
+ WEALTH_3       1.000         1.000
+
+     WARNING:  THE COVARIANCE COVERAGE FALLS BELOW THE SPECIFIED LIMIT.
+
+
+     PROPORTION OF DATA PRESENT FOR U
+
+
+           Covariance Coverage
+              MENTAL
+              ________
+ MENTAL         0.015
+
+     WARNING:  THE COVARIANCE COVERAGE FALLS BELOW THE SPECIFIED LIMIT.
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              MENTAL_4      FEMALE        AGE           PAT_INT       PAT_HIG
+              ________      ________      ________      ________      ________
+ MENTAL_4       0.086
+ FEMALE         0.086         1.000
+ AGE            0.086         1.000         1.000
+ PAT_INT        0.086         1.000         1.000         1.000
+ PAT_HIG        0.086         1.000         1.000         1.000         1.000
+ SELF_INT       0.086         1.000         1.000         1.000         1.000
+ SELF_HIG       0.086         1.000         1.000         1.000         1.000
+ EDU_UPP        0.086         1.000         1.000         1.000         1.000
+ EDU_TER        0.086         1.000         1.000         1.000         1.000
+ WEALTH_2       0.086         1.000         1.000         1.000         1.000
+ WEALTH_3       0.086         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SELF_INT      SELF_HIG      EDU_UPP       EDU_TER       WEALTH_2
+              ________      ________      ________      ________      ________
+ SELF_INT       1.000
+ SELF_HIG       1.000         1.000
+ EDU_UPP        1.000         1.000         1.000
+ EDU_TER        1.000         1.000         1.000         1.000
+ WEALTH_2       1.000         1.000         1.000         1.000         1.000
+ WEALTH_3       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              WEALTH_3
+              ________
+ WEALTH_3       1.000
+
+     THE COVARIANCE COVERAGE FALLS BELOW THE SPECIFIED LIMIT.  THE MISSING
+     DATA EM ALGORITHM WILL NOT BE INITIATED.  CHECK YOUR DATA OR LOWER THE
+     COVARIANCE COVERAGE LIMIT.
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    MENTAL
+      Category 1    0.084            5.577
+      Category 2    0.916           60.736
+    N
+      Category 1    0.147          697.582
+      Category 2    0.174          827.032
+      Category 3    0.106          502.877
+      Category 4    0.117          555.467
+      Category 5    0.229         1088.631
+      Category 6    0.228         1087.412
+
+
+SAMPLE STATISTICS
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     MENTAL_4              0.924      -3.210       0.000    7.37%       1.000      1.000      1.000
+             407.000       0.070       8.305       1.000   92.63%       1.000      1.000
+     FEMALE                0.535      -0.140       0.000   43.73%       0.000      0.000      1.000
+            4759.000       0.249      -1.980       1.000   56.27%       1.000      1.000
+     AGE                  63.591       0.606      33.000    0.02%      56.000     60.000     62.000
+            4759.000      65.135      -0.424      99.000    0.02%      64.000     71.000
+     PAT_INT               0.333       0.709       0.000   67.85%       0.000      0.000      0.000
+            4759.000       0.222      -1.498       1.000   32.15%       0.000      1.000
+     PAT_HIG               0.376       0.512       0.000   59.45%       0.000      0.000      0.000
+            4759.000       0.235      -1.738       1.000   40.55%       1.000      1.000
+     SELF_INT              0.251       1.148       0.000   73.84%       0.000      0.000      0.000
+            4759.000       0.188      -0.683       1.000   26.16%       0.000      1.000
+     SELF_HIG              0.346       0.648       0.000   60.75%       0.000      0.000      0.000
+            4759.000       0.226      -1.580       1.000   39.25%       0.000      1.000
+     EDU_UPP               0.569      -0.277       0.000   41.02%       0.000      0.000      1.000
+            4759.000       0.245      -1.923       1.000   58.98%       1.000      1.000
+     EDU_TER               0.169       1.771       0.000   79.11%       0.000      0.000      0.000
+            4759.000       0.140       1.137       1.000   20.89%       0.000      1.000
+     WEALTH_2              0.340       0.674       0.000   66.06%       0.000      0.000      0.000
+            4759.000       0.225      -1.546       1.000   33.94%       0.000      1.000
+     WEALTH_3              0.357       0.599       0.000   60.41%       0.000      0.000      0.000
+            4759.000       0.229      -1.641       1.000   39.59%       0.000      1.000
+
+     THE ESTIMATED COVARIANCE MATRIX FOR THE Y VARIABLES IN CLASS 1 COULD NOT
+     BE INVERTED.  PROBLEM INVOLVING VARIABLE MENTAL_4.  COMPUTATION COULD
+     NOT BE COMPLETED IN ITERATION 3.  CHANGE YOUR MODEL AND/OR STARTING
+     VALUES.  THIS MAY BE DUE TO A ZERO ESTIMATED VARIANCE, THAT IS, NO WITHIN-CLASS
+     VARIATION FOR THE VARIABLE.
+
+
+     THE MODEL ESTIMATION DID NOT TERMINATE NORMALLY DUE TO AN ERROR IN THE
+     COMPUTATION.  CHANGE YOUR MODEL AND/OR STARTING VALUES.
+
+
+
+
+
+
+MODEL RESULTS
+
+                    Estimate
+
+Latent Class 1
+
+ MENTAL     ON
+    FEMALE            -0.483
+    AGE               -0.090
+    PAT_INT            0.842
+    PAT_HIG            0.623
+    SELF_INT          -0.201
+    SELF_HIG           0.391
+    EDU_UPP           -0.367
+    EDU_TER           -2.326
+    WEALTH_2          -0.938
+    WEALTH_3           0.693
+
+ Means
+    MENTAL_4           0.000
+
+ Means
+    N#1                5.933
+    N#2                2.649
+    N#3               -0.663
+    N#4                2.911
+    N#5                2.726
+
+ Thresholds
+    MENTAL$1         -12.422
+
+ Variances
+    MENTAL_4           0.000
+
+Latent Class 2
+
+ MENTAL     ON
+    FEMALE            -0.483
+    AGE               -0.090
+    PAT_INT            0.842
+    PAT_HIG            0.623
+    SELF_INT          -0.201
+    SELF_HIG           0.391
+    EDU_UPP           -0.367
+    EDU_TER           -2.326
+    WEALTH_2          -0.938
+    WEALTH_3           0.693
+
+ Means
+    MENTAL_4           1.000
+
+ Means
+    N#1               -0.217
+    N#2                3.291
+    N#3               -3.355
+    N#4               -1.244
+    N#5                0.642
+
+ Thresholds
+    MENTAL$1          -9.120
+
+ Variances
+    MENTAL_4           0.000
+
+Latent Class 3
+
+ MENTAL     ON
+    FEMALE            -0.483
+    AGE               -0.090
+    PAT_INT            0.842
+    PAT_HIG            0.623
+    SELF_INT          -0.201
+    SELF_HIG           0.391
+    EDU_UPP           -0.367
+    EDU_TER           -2.326
+    WEALTH_2          -0.938
+    WEALTH_3           0.693
+
+ Means
+    MENTAL_4           1.000
+
+ Means
+    N#1               -3.076
+    N#2               -2.195
+    N#3                3.177
+    N#4               -1.410
+    N#5               -1.438
+
+ Thresholds
+    MENTAL$1          -8.099
+
+ Variances
+    MENTAL_4           0.000
+
+Latent Class 4
+
+ MENTAL     ON
+    FEMALE            -0.483
+    AGE               -0.090
+    PAT_INT            0.842
+    PAT_HIG            0.623
+    SELF_INT          -0.201
+    SELF_HIG           0.391
+    EDU_UPP           -0.367
+    EDU_TER           -2.326
+    WEALTH_2          -0.938
+    WEALTH_3           0.693
+
+ Means
+    MENTAL_4           1.000
+
+ Means
+    N#1                0.910
+    N#2               -0.302
+    N#3               -1.580
+    N#4                3.583
+    N#5                0.671
+
+ Thresholds
+    MENTAL$1          -9.184
+
+ Variances
+    MENTAL_4           0.000
+
+Latent Class 5
+
+ MENTAL     ON
+    FEMALE            -0.483
+    AGE               -0.090
+    PAT_INT            0.842
+    PAT_HIG            0.623
+    SELF_INT          -0.201
+    SELF_HIG           0.391
+    EDU_UPP           -0.367
+    EDU_TER           -2.326
+    WEALTH_2          -0.938
+    WEALTH_3           0.693
+
+ Means
+    MENTAL_4           1.000
+
+ Means
+    N#1               -1.643
+    N#2               -0.771
+    N#3               -3.599
+    N#4               -1.410
+    N#5                2.360
+
+ Thresholds
+    MENTAL$1          -7.898
+
+ Variances
+    MENTAL_4           0.000
+
+Latent Class 6
+
+ MENTAL     ON
+    FEMALE            -0.483
+    AGE               -0.090
+    PAT_INT            0.842
+    PAT_HIG            0.623
+    SELF_INT          -0.201
+    SELF_HIG           0.391
+    EDU_UPP           -0.367
+    EDU_TER           -2.326
+    WEALTH_2          -0.938
+    WEALTH_3           0.693
+
+ Means
+    MENTAL_4           1.000
+
+ Means
+    N#1               -5.926
+    N#2               -3.660
+    N#3               -5.427
+    N#4               -4.506
+    N#5               -2.354
+
+ Thresholds
+    MENTAL$1          -9.006
+
+ Variances
+    MENTAL_4           0.000
+
+Categorical Latent Variables
+
+ Means
+    C#1               -0.440
+    C#2               -0.211
+    C#3               -0.682
+    C#4               -0.525
+    C#5                0.014
+
+New/Additional Parameters
+    DIFF12            -3.303
+    DIFF13            -4.323
+    DIFF23            -1.020
+    DIFF14            -3.238
+    DIFF24             0.065
+    DIFF34             1.085
+    DIFF15            -4.524
+    DIFF16            -3.416
+    DIFF25            -1.221
+    DIFF26            -0.113
+    DIFF35            -0.201
+    DIFF36             0.907
+    DIFF45            -1.286
+    DIFF46            -0.178
+    DIFF56             1.108
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     %OVERALL%
+
+     mental ON female;
+     mental ON age;
+     mental ON pat_int;
+     mental ON pat_hig;
+     mental ON self_int;
+     mental ON self_hig;
+     mental ON edu_upp;
+     mental ON edu_ter;
+     mental ON wealth_2;
+     mental ON wealth_3;
+
+     [ c#1*-0.43954 ];
+     [ c#2*-0.21122 ];
+     [ c#3*-0.68237 ];
+     [ c#4*-0.52492 ];
+     [ c#5*0.01409 ];
+
+     %C#1%
+
+     mental ON female*-0.48343 (9);
+     mental ON age*-0.08957 (10);
+     mental ON pat_int*0.84235 (11);
+     mental ON pat_hig*0.62341 (12);
+     mental ON self_int*-0.20074 (13);
+     mental ON self_hig*0.39075 (14);
+     mental ON edu_upp*-0.36700 (15);
+     mental ON edu_ter*-2.32577 (16);
+     mental ON wealth_2*-0.93772 (17);
+     mental ON wealth_3*0.69297 (18);
+
+     [ mental_4*0.00001 ];
+     [ n#1@5.93300 ];
+     [ n#2@2.64900 ];
+     [ n#3@-0.66300 ];
+     [ n#4@2.91100 ];
+     [ n#5@2.72600 ];
+
+     [ mental$1*-12.42214 ] (m1);
+
+     mental_4*0.00000 (2);
+
+     %C#2%
+
+     mental ON female*-0.48343 (9);
+     mental ON age*-0.08957 (10);
+     mental ON pat_int*0.84235 (11);
+     mental ON pat_hig*0.62341 (12);
+     mental ON self_int*-0.20074 (13);
+     mental ON self_hig*0.39075 (14);
+     mental ON edu_upp*-0.36700 (15);
+     mental ON edu_ter*-2.32577 (16);
+     mental ON wealth_2*-0.93772 (17);
+     mental ON wealth_3*0.69297 (18);
+
+     [ mental_4*1.00000 ];
+     [ n#1@-0.21700 ];
+     [ n#2@3.29100 ];
+     [ n#3@-3.35500 ];
+     [ n#4@-1.24400 ];
+     [ n#5@0.64200 ];
+
+     [ mental$1*-9.11956 ] (m2);
+
+     mental_4*0.00000 (2);
+
+     %C#3%
+
+     mental ON female*-0.48343 (9);
+     mental ON age*-0.08957 (10);
+     mental ON pat_int*0.84235 (11);
+     mental ON pat_hig*0.62341 (12);
+     mental ON self_int*-0.20074 (13);
+     mental ON self_hig*0.39075 (14);
+     mental ON edu_upp*-0.36700 (15);
+     mental ON edu_ter*-2.32577 (16);
+     mental ON wealth_2*-0.93772 (17);
+     mental ON wealth_3*0.69297 (18);
+
+     [ mental_4*1.00000 ];
+     [ n#1@-3.07600 ];
+     [ n#2@-2.19500 ];
+     [ n#3@3.17700 ];
+     [ n#4@-1.41000 ];
+     [ n#5@-1.43800 ];
+
+     [ mental$1*-8.09936 ] (m3);
+
+     mental_4*0.00000 (2);
+
+     %C#4%
+
+     mental ON female*-0.48343 (9);
+     mental ON age*-0.08957 (10);
+     mental ON pat_int*0.84235 (11);
+     mental ON pat_hig*0.62341 (12);
+     mental ON self_int*-0.20074 (13);
+     mental ON self_hig*0.39075 (14);
+     mental ON edu_upp*-0.36700 (15);
+     mental ON edu_ter*-2.32577 (16);
+     mental ON wealth_2*-0.93772 (17);
+     mental ON wealth_3*0.69297 (18);
+
+     [ mental_4*1.00000 ];
+     [ n#1@0.91000 ];
+     [ n#2@-0.30200 ];
+     [ n#3@-1.58000 ];
+     [ n#4@3.58300 ];
+     [ n#5@0.67100 ];
+
+     [ mental$1*-9.18441 ] (m4);
+
+     mental_4*0.00000 (2);
+
+     %C#5%
+
+     mental ON female*-0.48343 (9);
+     mental ON age*-0.08957 (10);
+     mental ON pat_int*0.84235 (11);
+     mental ON pat_hig*0.62341 (12);
+     mental ON self_int*-0.20074 (13);
+     mental ON self_hig*0.39075 (14);
+     mental ON edu_upp*-0.36700 (15);
+     mental ON edu_ter*-2.32577 (16);
+     mental ON wealth_2*-0.93772 (17);
+     mental ON wealth_3*0.69297 (18);
+
+     [ mental_4*1.00000 ];
+     [ n#1@-1.64300 ];
+     [ n#2@-0.77100 ];
+     [ n#3@-3.59900 ];
+     [ n#4@-1.41000 ];
+     [ n#5@2.36000 ];
+
+     [ mental$1*-7.89826 ] (m5);
+
+     mental_4*0.00000 (2);
+
+     %C#6%
+
+     mental ON female*-0.48343 (9);
+     mental ON age*-0.08957 (10);
+     mental ON pat_int*0.84235 (11);
+     mental ON pat_hig*0.62341 (12);
+     mental ON self_int*-0.20074 (13);
+     mental ON self_hig*0.39075 (14);
+     mental ON edu_upp*-0.36700 (15);
+     mental ON edu_ter*-2.32577 (16);
+     mental ON wealth_2*-0.93772 (17);
+     mental ON wealth_3*0.69297 (18);
+
+     [ mental_4*1.00000 ];
+     [ n#1@-5.92600 ];
+     [ n#2@-3.66000 ];
+     [ n#3@-5.42700 ];
+     [ n#4@-4.50600 ];
+     [ n#5@-2.35400 ];
+
+     [ mental$1*-9.00619 ] (m6);
+
+     mental_4*0.00000 (2);
+
+     ! NEW statements in MODEL CONSTRAINT
+     NEW(diff12*-3.30258);
+     NEW(diff13*-4.32277);
+     NEW(diff23*-1.02019);
+     NEW(diff14*-3.23773);
+     NEW(diff24*0.06485);
+     NEW(diff34*1.08504);
+     NEW(diff15*-4.52388);
+     NEW(diff16*-3.41594);
+     NEW(diff25*-1.22130);
+     NEW(diff26*-0.11336);
+     NEW(diff35*-0.20110);
+     NEW(diff36*0.90683);
+     NEW(diff45*-1.28615);
+     NEW(diff46*-0.17821);
+     NEW(diff56*1.10793);
+
+
+
+
+     Beginning Time:  10:20:10
+        Ending Time:  10:20:11
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2020 Muthen & Muthen

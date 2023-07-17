@@ -1,0 +1,875 @@
+Mplus VERSION 8.5 (Mac)
+MUTHEN & MUTHEN
+06/19/2023   5:28 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  Step3 - 3step LSAY - Lab9
+  DATA:
+  FILE = "./Step1_MPlus_Outcomes.dat";
+
+  VARIABLE:
+  NAMES = W4_SMOKE W5_SMOKE W6_SMOKE W7_SMOKE W8_SMOKE W4_DRINK W5_DRINK W6_DRINK
+       W7_DRINK W8_DRINK W4_PA W5_PA W6_PA W7_PA W8_PA W4_FV W5_FV W6_FV W7_FV W8_FV
+       FEMALE AGE PAT_INT PAT_HIG SELF_INT SELF_HIG EDU_UPP EDU_TER WEALTH_2 WEALTH_3
+       EYE_4 CIRCUL_4 ENDOCR_4 MUSCUL_4 RESPIR_4 NEOPLA_4 NERVOU_4 MENTAL_4 MULTI_4
+       CMULTI_4 LUNCAN_4 EYE CIRCUL ENDOCR MUSCUL RESPIR NEOPLA NERVOU MENTAL MULTI
+       CMULTI LUNCAN CPROB1 CPROB2 CPROB3 CPROB4 CPROB5 CPROB6 CPROB7 N WEIGHTS;
+   MISSING=.;
+   nominal=N;
+    usevar = n;
+    USEOBSERVATIONS = Female NE -99 AND Age NE -99 AND
+    Pat_Int NE -99 AND
+  Pat_Hig NE -99 AND Self_Int NE -99 AND
+  Self_Hig NE -99 AND Edu_Upp NE -99 AND
+  Edu_Ter NE -99 AND
+  Wealth_2 NE -99 AND Wealth_3 NE -99;
+    missing are all (-99);
+    classes = c(7);
+    CATEGORICAL = Neopla;
+    usevar =  Neopla ;
+    WEIGHT  = Weights;
+  ANALYSIS:
+  estimator = mlr;
+    type = mixture;
+    starts = 0;
+    ITERATIONS = 1000;
+  MODEL:
+  %OVERALL%
+
+      %C#1%
+      [n#1@5.894];
+      [n#2@-0.212];
+      [n#3@2.744];
+      [n#4@2.929];
+      [n#5@2.767];
+      [n#6@2.614];
+    [Neopla$1](m1);
+
+     %C#2%
+    [n#1@0.943];
+    [n#2@5.57];
+    [n#3@0.299];
+    [n#4@-0.836];
+    [n#5@2.064];
+    [n#6@1.486];
+    [Neopla$1](m2);
+
+
+    %C#3%
+   [n#1@-0.647];
+    [n#2@-3.884];
+    [n#3@3.041];
+    [n#4@-2.079];
+    [n#5@0.435];
+    [n#6@-0.381];
+
+    [Neopla$1](m3);
+
+
+     %C#4%
+    [n#1@0.517];
+    [n#2@-4.099];
+    [n#3@-1.011];
+    [n#4@2.936];
+    [n#5@-3.339];
+    [n#6@-2.198];
+
+    [Neopla$1](m4);
+
+
+
+     %C#5%
+    [n#1@-1.493];
+    [n#2@-1.348];
+    [n#3@1.153];
+    [n#4@-4.366];
+    [n#5@4.073];
+    [n#6@0.948];
+
+    [Neopla$1](m5);
+
+
+      %C#6%
+    [n#1@-0.017];
+    [n#2@-1.78];
+    [n#3@0.663];
+    [n#4@-1.502];
+    [n#5@1.069];
+  [n#6@3.456];
+
+      [Neopla$1](m6);
+
+       %C#7%
+    [n#1@-6.144];
+    [n#2@-7.357];
+    [n#3@-2.764];
+    [n#4@-3.487];
+    [n#5@-3.163];
+    [n#6@-3.576];
+    [Neopla$1](m7);
+  MODEL CONSTRAINT:
+  New (diff12 diff13 diff23 diff14
+    diff24 diff34 diff15 diff16 diff25
+    diff26 diff35 diff36 diff45
+    diff46 diff56 diff17 diff27 diff37
+    diff47 diff57 diff67);
+    diff12 = m1-m2;  ! test pairwise distal mean differences
+    diff13 = m1-m3;
+    diff23 = m2-m3;
+    diff14 = m1-m4;
+    diff24 = m2-m4;
+    diff34 = m3-m4;
+    diff15 = m1-m5;
+    diff16 = m1-m6;
+    diff25 = m2-m5;
+    diff26 = m2-m6;
+    diff35 = m3-m5;
+    diff36 = m3-m6;
+    diff45 = m4-m5;
+    diff46 = m4-m6;
+    diff56 = m5-m6;
+    diff17 = m1-m7;   ! additional pairwise difference
+    diff27 = m2-m7;
+    diff37 = m3-m7;
+    diff47 = m4-m7;
+    diff57 = m5-m7;
+    diff67 = m6-m7;
+  MODEL TEST:
+  0=m1-m2;
+     0=m2-m3;
+     0=m3-m4; ! omnibus test of distal thresholds
+     0=m4-m5;
+     0=m5-m6;
+     0=m6-m7;
+  OUTPUT:
+  sampstat residual TECH11 TECH14;
+
+
+
+*** WARNING
+  One or more observations has a value of 0 for the WEIGHT variable.
+*** WARNING in OUTPUT command
+  SAMPSTAT option is not available when all outcomes are censored, ordered
+  categorical, unordered categorical (nominal), count or continuous-time
+  survival variables.  Request for SAMPSTAT is ignored.
+*** WARNING in OUTPUT command
+  TECH11 option is not available in conjunction with nonlinear constraints
+  through the use of MODEL CONSTRAINT.  Request for TECH11 is ignored.
+*** WARNING in OUTPUT command
+  TECH14 option is not available for TYPE=MIXTURE with weights.
+  Request for TECH14 is ignored.
+   4 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+Step3 - 3step LSAY - Lab9
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        4759
+
+Number of dependent variables                                    2
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Binary and ordered categorical (ordinal)
+   NEOPLA
+
+  Unordered categorical (nominal)
+   N
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  Weight variable       WEIGHTS
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                1000
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Link                                                         LOGIT
+
+Input data file(s)
+  ./Step1_MPlus_Outcomes.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             2
+     Number of y missing data patterns           0
+     Number of u missing data patterns           2
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR U
+
+
+           Covariance Coverage
+              NEOPLA
+              ________
+ NEOPLA         1.000
+
+
+UNIVARIATE PROPORTIONS AND COUNTS FOR CATEGORICAL VARIABLES
+
+    NEOPLA
+      Category 1    0.948         4509.853
+      Category 2    0.052          247.374
+    N
+      Category 1    0.141          669.020
+      Category 2    0.104          495.532
+      Category 3    0.172          820.693
+      Category 4    0.109          520.455
+      Category 5    0.212         1008.773
+      Category 6    0.128          607.051
+      Category 7    0.134          637.477
+
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       13
+
+Loglikelihood
+
+          H0 Value                      -10091.417
+          H0 Scaling Correction Factor      1.2550
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   20208.835
+          Bayesian (BIC)                 20292.916
+          Sample-Size Adjusted BIC       20251.607
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit for the Binary and Ordered Categorical
+(Ordinal) Outcomes
+
+          Pearson Chi-Square
+
+          Value                              0.000
+          Degrees of freedom cannot be computed for this model part.
+
+          Likelihood Ratio Chi-Square
+
+          Value                              0.000
+          Degrees of freedom cannot be computed for this model part.
+
+Chi-Square Test for MCAR under the Unrestricted Latent Class Indicator Model
+
+          Pearson Chi-Square
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           1.0000
+
+          Likelihood Ratio Chi-Square
+
+          Value                              0.000
+          Degrees of Freedom                     0
+          P-Value                           1.0000
+
+Wald Test of Parameter Constraints
+
+          Value                              7.263
+          Degrees of Freedom                     6
+          P-Value                           0.2972
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1        692.12180          0.14543
+       2        519.09880          0.10908
+       3        798.64026          0.16782
+       4        544.05644          0.11432
+       5        953.56601          0.20037
+       6        613.40035          0.12889
+       7        638.11633          0.13409
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1        692.12180          0.14543
+       2        519.09880          0.10908
+       3        798.64026          0.16782
+       4        544.05644          0.11432
+       5        953.56601          0.20037
+       6        613.40035          0.12889
+       7        638.11633          0.13409
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1              669          0.14058
+       2              496          0.10413
+       3              821          0.17245
+       4              520          0.10936
+       5             1009          0.21197
+       6              607          0.12756
+       7              637          0.13395
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.696
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2        3        4        5        6        7
+
+    1   0.876    0.007    0.025    0.062    0.005    0.023    0.002
+    2   0.003    0.982    0.001    0.001    0.008    0.005    0.001
+    3   0.031    0.003    0.820    0.011    0.056    0.037    0.042
+    4   0.058    0.002    0.008    0.893    0.000    0.007    0.032
+    5   0.025    0.014    0.049    0.001    0.841    0.046    0.023
+    6   0.036    0.013    0.036    0.005    0.061    0.823    0.025
+    7   0.003    0.003    0.050    0.039    0.023    0.025    0.858
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2        3        4        5        6        7
+
+    1   0.847    0.002    0.036    0.044    0.037    0.032    0.002
+    2   0.009    0.937    0.005    0.002    0.028    0.016    0.004
+    3   0.021    0.001    0.843    0.005    0.062    0.028    0.040
+    4   0.076    0.001    0.017    0.855    0.002    0.005    0.045
+    5   0.003    0.004    0.048    0.000    0.890    0.039    0.015
+    6   0.025    0.004    0.050    0.006    0.075    0.814    0.026
+    7   0.002    0.001    0.054    0.026    0.036    0.024    0.857
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2        3        4        5        6        7
+
+    1      5.894   -0.212    2.744    2.929    2.767    2.614    0.000
+    2      0.943    5.570    0.299   -0.836    2.064    1.486    0.000
+    3     -0.647   -3.884    3.041   -2.079    0.435   -0.381    0.000
+    4      0.517   -4.099   -1.011    2.936   -3.339   -2.198    0.000
+    5     -1.493   -1.348    1.153   -4.366    4.073    0.948    0.000
+    6     -0.017   -1.780    0.663   -1.502    1.069    3.456    0.000
+    7     -6.144   -7.357   -2.764   -3.487   -3.163   -3.576    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ Means
+    N#1                5.894      0.000    999.000    999.000
+    N#2               -0.212      0.000    999.000    999.000
+    N#3                2.744      0.000    999.000    999.000
+    N#4                2.929      0.000    999.000    999.000
+    N#5                2.767      0.000    999.000    999.000
+    N#6                2.614      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           2.850      0.208     13.678      0.000
+
+Latent Class 2
+
+ Means
+    N#1                0.943      0.000    999.000    999.000
+    N#2                5.570      0.000    999.000    999.000
+    N#3                0.299      0.000    999.000    999.000
+    N#4               -0.836      0.000    999.000    999.000
+    N#5                2.064      0.000    999.000    999.000
+    N#6                1.486      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           3.148      0.265     11.862      0.000
+
+Latent Class 3
+
+ Means
+    N#1               -0.647      0.000    999.000    999.000
+    N#2               -3.884      0.000    999.000    999.000
+    N#3                3.041      0.000    999.000    999.000
+    N#4               -2.079      0.000    999.000    999.000
+    N#5                0.435      0.000    999.000    999.000
+    N#6               -0.381      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           2.969      0.231     12.844      0.000
+
+Latent Class 4
+
+ Means
+    N#1                0.517      0.000    999.000    999.000
+    N#2               -4.099      0.000    999.000    999.000
+    N#3               -1.011      0.000    999.000    999.000
+    N#4                2.936      0.000    999.000    999.000
+    N#5               -3.339      0.000    999.000    999.000
+    N#6               -2.198      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           2.947      0.224     13.127      0.000
+
+Latent Class 5
+
+ Means
+    N#1               -1.493      0.000    999.000    999.000
+    N#2               -1.348      0.000    999.000    999.000
+    N#3                1.153      0.000    999.000    999.000
+    N#4               -4.366      0.000    999.000    999.000
+    N#5                4.073      0.000    999.000    999.000
+    N#6                0.948      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           2.684      0.185     14.496      0.000
+
+Latent Class 6
+
+ Means
+    N#1               -0.017      0.000    999.000    999.000
+    N#2               -1.780      0.000    999.000    999.000
+    N#3                0.663      0.000    999.000    999.000
+    N#4               -1.502      0.000    999.000    999.000
+    N#5                1.069      0.000    999.000    999.000
+    N#6                3.456      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           2.617      0.230     11.378      0.000
+
+Latent Class 7
+
+ Means
+    N#1               -6.144      0.000    999.000    999.000
+    N#2               -7.357      0.000    999.000    999.000
+    N#3               -2.764      0.000    999.000    999.000
+    N#4               -3.487      0.000    999.000    999.000
+    N#5               -3.163      0.000    999.000    999.000
+    N#6               -3.576      0.000    999.000    999.000
+
+ Thresholds
+    NEOPLA$1           3.464      0.307     11.290      0.000
+
+Categorical Latent Variables
+
+ Means
+    C#1                0.081      0.069      1.177      0.239
+    C#2               -0.206      0.074     -2.808      0.005
+    C#3                0.224      0.072      3.116      0.002
+    C#4               -0.159      0.075     -2.122      0.034
+    C#5                0.402      0.068      5.890      0.000
+    C#6               -0.040      0.078     -0.506      0.613
+
+New/Additional Parameters
+    DIFF12            -0.298      0.339     -0.881      0.379
+    DIFF13            -0.119      0.320     -0.372      0.710
+    DIFF23             0.179      0.352      0.509      0.611
+    DIFF14            -0.097      0.326     -0.297      0.767
+    DIFF24             0.202      0.348      0.580      0.562
+    DIFF34             0.022      0.324      0.069      0.945
+    DIFF15             0.166      0.282      0.588      0.557
+    DIFF16             0.233      0.320      0.730      0.465
+    DIFF25             0.464      0.327      1.420      0.156
+    DIFF26             0.532      0.354      1.502      0.133
+    DIFF35             0.285      0.312      0.914      0.361
+    DIFF36             0.353      0.338      1.042      0.297
+    DIFF45             0.262      0.290      0.905      0.365
+    DIFF46             0.330      0.322      1.025      0.305
+    DIFF56             0.068      0.312      0.217      0.828
+    DIFF17            -0.614      0.369     -1.666      0.096
+    DIFF27            -0.315      0.406     -0.776      0.438
+    DIFF37            -0.495      0.403     -1.229      0.219
+    DIFF47            -0.517      0.395     -1.310      0.190
+    DIFF57            -0.780      0.364     -2.140      0.032
+    DIFF67            -0.847      0.393     -2.155      0.031
+
+
+RESULTS IN PROBABILITY SCALE
+
+Latent Class 1
+
+ NEOPLA
+    Category 1         0.945      0.011     87.764      0.000
+    Category 2         0.055      0.011      5.077      0.000
+
+Latent Class 2
+
+ NEOPLA
+    Category 1         0.959      0.010     91.547      0.000
+    Category 2         0.041      0.010      3.929      0.000
+
+Latent Class 3
+
+ NEOPLA
+    Category 1         0.951      0.011     88.572      0.000
+    Category 2         0.049      0.011      4.548      0.000
+
+Latent Class 4
+
+ NEOPLA
+    Category 1         0.950      0.011     89.281      0.000
+    Category 2         0.050      0.011      4.689      0.000
+
+Latent Class 5
+
+ NEOPLA
+    Category 1         0.936      0.011     84.492      0.000
+    Category 2         0.064      0.011      5.769      0.000
+
+Latent Class 6
+
+ NEOPLA
+    Category 1         0.932      0.015     63.872      0.000
+    Category 2         0.068      0.015      4.666      0.000
+
+Latent Class 7
+
+ NEOPLA
+    Category 1         0.970      0.009    107.354      0.000
+    Category 2         0.030      0.009      3.361      0.001
+
+
+LATENT CLASS ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+Latent Class 1 Compared to Latent Class 2
+
+ NEOPLA
+    Category > 1       1.348      0.457      0.694      2.619
+
+Latent Class 1 Compared to Latent Class 3
+
+ NEOPLA
+    Category > 1       1.127      0.360      0.602      2.109
+
+Latent Class 1 Compared to Latent Class 4
+
+ NEOPLA
+    Category > 1       1.102      0.359      0.581      2.087
+
+Latent Class 1 Compared to Latent Class 5
+
+ NEOPLA
+    Category > 1       0.847      0.239      0.487      1.472
+
+Latent Class 1 Compared to Latent Class 6
+
+ NEOPLA
+    Category > 1       0.792      0.253      0.423      1.482
+
+Latent Class 1 Compared to Latent Class 7
+
+ NEOPLA
+    Category > 1       1.847      0.681      0.897      3.804
+
+Latent Class 2 Compared to Latent Class 3
+
+ NEOPLA
+    Category > 1       0.836      0.294      0.419      1.667
+
+Latent Class 2 Compared to Latent Class 4
+
+ NEOPLA
+    Category > 1       0.817      0.284      0.413      1.616
+
+Latent Class 2 Compared to Latent Class 5
+
+ NEOPLA
+    Category > 1       0.629      0.206      0.331      1.193
+
+Latent Class 2 Compared to Latent Class 6
+
+ NEOPLA
+    Category > 1       0.588      0.208      0.293      1.176
+
+Latent Class 2 Compared to Latent Class 7
+
+ NEOPLA
+    Category > 1       1.371      0.557      0.618      3.039
+
+Latent Class 3 Compared to Latent Class 4
+
+ NEOPLA
+    Category > 1       0.978      0.317      0.518      1.844
+
+Latent Class 3 Compared to Latent Class 5
+
+ NEOPLA
+    Category > 1       0.752      0.235      0.408      1.386
+
+Latent Class 3 Compared to Latent Class 6
+
+ NEOPLA
+    Category > 1       0.703      0.238      0.362      1.364
+
+Latent Class 3 Compared to Latent Class 7
+
+ NEOPLA
+    Category > 1       1.640      0.660      0.745      3.610
+
+Latent Class 4 Compared to Latent Class 5
+
+ NEOPLA
+    Category > 1       0.769      0.223      0.436      1.358
+
+Latent Class 4 Compared to Latent Class 6
+
+ NEOPLA
+    Category > 1       0.719      0.232      0.382      1.352
+
+Latent Class 4 Compared to Latent Class 7
+
+ NEOPLA
+    Category > 1       1.677      0.662      0.774      3.635
+
+Latent Class 5 Compared to Latent Class 6
+
+ NEOPLA
+    Category > 1       0.935      0.291      0.507      1.722
+
+Latent Class 5 Compared to Latent Class 7
+
+ NEOPLA
+    Category > 1       2.181      0.794      1.068      4.453
+
+Latent Class 6 Compared to Latent Class 7
+
+ NEOPLA
+    Category > 1       2.333      0.917      1.080      5.041
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.118E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+RESIDUAL OUTPUT
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 1
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.847          0.847                  0.000                0.000
+       Category 1        0.002          0.002                  0.000                0.000
+       Category 2        0.036          0.036                  0.000                0.000
+       Category 3        0.044          0.044                  0.000                0.000
+       Category 4        0.037          0.037                  0.000                0.000
+       Category 5        0.032          0.032                  0.000                0.000
+       Category 6        0.002          0.002                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 2
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.009          0.009                  0.000                0.000
+       Category 1        0.937          0.937                  0.000                0.000
+       Category 2        0.005          0.005                  0.000                0.000
+       Category 3        0.002          0.002                  0.000                0.000
+       Category 4        0.028          0.028                  0.000                0.000
+       Category 5        0.016          0.016                  0.000                0.000
+       Category 6        0.004          0.004                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 3
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.021          0.021                  0.000                0.000
+       Category 1        0.001          0.001                  0.000                0.000
+       Category 2        0.843          0.843                  0.000                0.000
+       Category 3        0.005          0.005                  0.000                0.000
+       Category 4        0.062          0.062                  0.000                0.000
+       Category 5        0.028          0.028                  0.000                0.000
+       Category 6        0.040          0.040                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 4
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.076          0.076                  0.000                0.000
+       Category 1        0.001          0.001                  0.000                0.000
+       Category 2        0.017          0.017                  0.000                0.000
+       Category 3        0.855          0.855                  0.000                0.000
+       Category 4        0.002          0.002                  0.000                0.000
+       Category 5        0.005          0.005                  0.000                0.000
+       Category 6        0.045          0.045                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 5
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.003          0.003                  0.000                0.000
+       Category 1        0.004          0.004                  0.000                0.000
+       Category 2        0.048          0.048                  0.000                0.000
+       Category 3        0.000          0.000                  0.000                0.000
+       Category 4        0.890          0.890                  0.000                0.000
+       Category 5        0.039          0.039                  0.000                0.000
+       Category 6        0.015          0.015                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 6
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.025          0.025                  0.000                0.000
+       Category 1        0.004          0.004                  0.000                0.000
+       Category 2        0.050          0.050                  0.000                0.000
+       Category 3        0.006          0.006                  0.000                0.000
+       Category 4        0.075          0.075                  0.000                0.000
+       Category 5        0.814          0.814                  0.000                0.000
+       Category 6        0.026          0.026                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 7
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     N
+       Category 0        0.002          0.002                  0.000                0.000
+       Category 1        0.001          0.001                  0.000                0.000
+       Category 2        0.054          0.054                  0.000                0.000
+       Category 3        0.026          0.026                  0.000                0.000
+       Category 4        0.036          0.036                  0.000                0.000
+       Category 5        0.024          0.024                  0.000                0.000
+       Category 6        0.857          0.857                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 1
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.945          0.945                  0.000                0.000
+       Category 2        0.055          0.055                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 2
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.959          0.959                  0.000                0.000
+       Category 2        0.041          0.041                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 3
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.951          0.951                  0.000                0.000
+       Category 2        0.049          0.049                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 4
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.950          0.950                  0.000                0.000
+       Category 2        0.050          0.050                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 5
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.936          0.936                  0.000                0.000
+       Category 2        0.064          0.064                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 6
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.932          0.932                  0.000                0.000
+       Category 2        0.068          0.068                  0.000                0.000
+
+
+     UNIVARIATE DISTRIBUTION FIT FOR CLASS 7
+
+     Variable          Observed      Estimated      Residual (Obs.-Est.)    Stand. Residual
+     NEOPLA
+       Category 1        0.970          0.970                  0.000                0.000
+       Category 2        0.030          0.030                  0.000                0.000
+
+
+     Beginning Time:  17:28:24
+        Ending Time:  17:28:24
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2020 Muthen & Muthen
