@@ -26,3 +26,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 # Contact
 For any queries regarding the code, email alishasuhag@gmail.com.
+
+# Citation
+
+Alisha Suhag. alisha392/Health_Behaviour_Clusters: Version 1.0.0. Zenodo; 2023. doi:10.5281/zenodo.8157562
